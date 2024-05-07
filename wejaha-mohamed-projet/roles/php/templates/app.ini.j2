@@ -1,0 +1,5 @@
+{%- set config = php.config|default({}) -%}
+
+{% for key, value in config.items() %}
+  {{ key }} = {{ value }}
+{% endfor %}

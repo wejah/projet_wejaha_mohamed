@@ -1,0 +1,2 @@
+stage: production
+memory: 256M

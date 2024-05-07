@@ -1,0 +1,6 @@
+prod_user: my_prod_user
+prod_db_name: my_database
+mysql_prod_pass: root
+stag_user: my_stag_user
+stag_db_name: my_staging_db
+mysql_stag_pass: root

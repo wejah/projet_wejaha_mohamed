@@ -1,0 +1,52 @@
+- name: Install Nginx Webserver
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+  become: yes
+  tags:
+    - nginx
+    - nginx_installation
+    - installation
+
+- name: Copy Custom Nginx Configuration
+  ansible.builtin.copy:
+    src: files/nginx/nginx.conf
+    dest: /etc/nginx/conf.d/nginx.conf 
+  become: yes
+  notify: 
+    - restart_nginx
+  tags:
+    - nginx
+    - nginx_configuration
+    - configuration
+    
+- name: Create Directory /srv/app if it Doesn't Exist
+  ansible.builtin.file:
+    path: /srv/app
+    state: directory
+    owner: www-data
+    mode: '0755'
+  become: yes
+  tags:
+    - nginx
+    - directory_creation
+    - deployment
+
+- name: Copy PHP Page to Server
+  ansible.builtin.copy:
+    src: files/php_app/index.php
+    dest: /srv/app/index.php
+    owner: www-data
+    mode: '0644'
+  become: yes
+  tags:
+    - nginx
+    - deployment
+
+- name: Remove File if Server Name Declared Twice
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: yes
+  tags:
+    - nginx
